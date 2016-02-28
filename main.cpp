@@ -1,6 +1,10 @@
 #define STM32F103xB
 #include <stm32f1xx.h>
 
+#include "serial.h"
+
+#include "test-language-features.h"
+
 void setup_serial(int baud) {
     RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
     int divider = 8000000 / (16 * baud);
@@ -27,13 +31,26 @@ void serial_writestr(const char* s) {
     }
 }
 
+void init_sram_sections() {
+
+    extern uint32_t __bss_start, __bss_end;
+
+    for (uint32_t* dst = &__bss_start; dst< &__bss_end; dst++) {
+        *dst = 0;
+    }
+}
+
 void mainFn() {
+
+    init_sram_sections();
+
     RCC->APB2ENR |= RCC_APB2ENR_IOPCEN;
     GPIOC->CRH = 0b0100'0100'0011'0100'0100'0100'0100'0100;
     GPIOC->BRR = 1 << 13;
 
     setup_serial(19200);
     serial_writestr("test\r\n");
+    run_tests();
         
     while (1) {
         int ctr;

@@ -40,6 +40,12 @@ SECTIONS {
         __stack_end = .;
     } > RAM
 
+    .bss : {
+        __bss_start = . ;
+        *(.bss*)
+        __bss_end = . ;
+    } > RAM
+
     /* debug information, intentionally only support for modern dwarf */
 
     .debug_info 0 : { *(.debug_info*) }
