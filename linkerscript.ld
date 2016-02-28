@@ -40,6 +40,15 @@ SECTIONS {
         __stack_end = .;
     } > RAM
 
+    .data : {
+        *(.data*)
+        . = ALIGN(4);
+    } > RAM AT>FLASH
+
+    __data_start_flash = LOADADDR(.data);
+    __data_start_ram = ADDR(.data);
+    __data_size = SIZEOF(.data);
+
     .bss : {
         __bss_start = . ;
         *(.bss*)

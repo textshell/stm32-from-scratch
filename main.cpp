@@ -32,6 +32,15 @@ void serial_writestr(const char* s) {
 }
 
 void init_sram_sections() {
+    extern uint32_t __data_start_flash, __data_start_ram, __data_size;
+
+    uint32_t *src = &__data_start_flash;
+    uint32_t *dst = &__data_start_ram;
+    uint32_t *dend = dst + ((uint32_t)&__data_size);
+
+    while (dst < dend) {
+        *dst++ = *src++;
+    }
 
     extern uint32_t __bss_start, __bss_end;
 
