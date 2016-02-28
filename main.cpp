@@ -54,9 +54,9 @@ void mainFn() {
     }
 }
 
-
+extern char __stack_end;
 extern void (* const vectors[])() __attribute__ ((section(".vectors"))) = {
-                (void (*)())0x20000400,
+                (void (*)())&__stack_end,
                 mainFn,
 };
 

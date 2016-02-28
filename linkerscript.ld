@@ -16,7 +16,10 @@ LD_FEATURE ("SANE_EXPR")
 
 MEMORY {
     FLASH : ORIGIN = 0x08000000, LENGTH = 64K
+    RAM :   ORIGIN = 0x20000000, LENGTH = 20K
 }
+
+__stack_size = 0x400;
 
 SECTIONS {
     .vectors : {
@@ -30,6 +33,12 @@ SECTIONS {
     .rodata : {
         *(.rodata*)
     } > FLASH
+
+    .stack : {
+        __stack_start = .;
+        . = . + __stack_size;
+        __stack_end = .;
+    } > RAM
 
     /* debug information, intentionally only support for modern dwarf */
 
