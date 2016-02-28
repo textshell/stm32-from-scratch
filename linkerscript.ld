@@ -20,7 +20,7 @@ MEMORY {
 
 SECTIONS {
     .vectors : {
-        *(.vectors)
+        KEEP(*(.vectors))
     } > FLASH
 
     .text : {

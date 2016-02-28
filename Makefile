@@ -40,6 +40,9 @@ ASFLAGS = $(COMMONFLAGS) $(INCLUDEDIRS)
 LDFLAGS = $(CPUFLAGS) -T$(LD_SCRIPT) -nostartfiles -g \
           -Wl,-Map=$(OUT)/$(PROJECT).map,--cref -Wl,--print-memory-usage -Wl,--warn-common
 
+CFLAGS += -ffunction-sections -fdata-sections
+CXXFLAGS += -ffunction-sections -fdata-sections
+LDFLAGS += -Wl,--gc-sections
 
 OBJ_FILES = $(addprefix $(OUT)/, $(notdir $(ASM_SRC:.S=.o)))  \
             $(addprefix $(OUT)/, $(notdir $(C_SRC:.c=.o)))    \
