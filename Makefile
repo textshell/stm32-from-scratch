@@ -42,7 +42,7 @@ LDFLAGS = $(CPUFLAGS) -T$(LD_SCRIPT) -nostartfiles -g \
 
 CFLAGS += -ffunction-sections -fdata-sections
 CXXFLAGS += -ffunction-sections -fdata-sections
-LDFLAGS += -Wl,--gc-sections
+LDFLAGS += -Wl,--gc-sections -Wl,--orphan-handling=error
 
 OBJ_FILES = $(addprefix $(OUT)/, $(notdir $(ASM_SRC:.S=.o)))  \
             $(addprefix $(OUT)/, $(notdir $(C_SRC:.c=.o)))    \
