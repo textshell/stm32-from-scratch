@@ -4,7 +4,7 @@ Posts so far:
 
  * [STM32 from scratch, the bare minimum](http://tty.uchuujin.de/2016/02/stm32-from-scratch-bare-minimals/)
  * [STM32 from scratch, the hardware](http://tty.uchuujin.de/2016/02/stm32-from-scratch-the-hardware/)
-
+ * [STM32 from scratch, serial](http://tty.uchuujin.de/2016/02/stm32-from-scratch-serial/)
 
 Toolchain tested with:
 
