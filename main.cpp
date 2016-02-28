@@ -1,4 +1,6 @@
-#include "minsys.h"
+#define STM32F103xB
+#include <stm32f1xx.h>
+
 
 void mainFn() {
     RCC->APB2ENR |= RCC_APB2ENR_IOPCEN;

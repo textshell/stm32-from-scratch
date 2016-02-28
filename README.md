@@ -17,7 +17,7 @@ But it should work with other toolchains versions too.
 compile with:
 
 ```
-arm-none-eabi-g++ -c -mcpu=cortex-m3 -mthumb --std=c++14 -O2 -fno-rtti -fno-exceptions main.cpp -o main.o
+arm-none-eabi-g++ -c -mcpu=cortex-m3 -mthumb --std=c++14 -O2 -fno-rtti -fno-exceptions -I common/stm_include -I common/cmsis_include main.cpp -o main.o
 arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Tlinkerscript.ld -nostartfiles main.o -o main.elf
 arm-none-eabi-objcopy -O binary main.elf main.bin
 ```
