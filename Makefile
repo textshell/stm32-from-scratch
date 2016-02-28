@@ -20,21 +20,26 @@ OUT=out
 CC = $(TARGET)gcc
 CXX = $(TARGET)g++
 AS = $(TARGET)gcc -x assembler-with-cpp
+OBJDUMP = $(TARGET)objdump
 OBJCOPY = $(TARGET)objcopy
 
 CPUFLAGS = -mcpu=cortex-m3 -mthumb
-COMMONFLAGS = $(CPUFLAGS) -MD -MP -MF $(@:.o=.d) $(DEFINES)
+COMMONFLAGS = $(CPUFLAGS) -g -ggdb3 -Wa,-amhlsd=$(@:.o=.lst)  -MD -MP -MF $(@:.o=.d) $(DEFINES)
 
 CFLAGS = $(COMMONFLAGS) -O2 \
-         -std=gnu99 $(INCLUDEDIRS)
+         -Wall -Werror=strict-prototypes -Wextra -Werror=return-type \
+         -std=gnu99 -fstack-usage -fverbose-asm $(INCLUDEDIRS)
 
 CXXFLAGS = $(COMMONFLAGS) -O2 \
+         -Wall -Wextra  -Werror=return-type \
          -fno-rtti -fno-exceptions \
-         -std=gnu++14 $(INCLUDEDIRS)
+         -std=gnu++14 -fstack-usage -fverbose-asm $(INCLUDEDIRS)
 
 ASFLAGS = $(COMMONFLAGS) $(INCLUDEDIRS)
 
-LDFLAGS = $(CPUFLAGS) -T$(LD_SCRIPT) -nostartfiles
+LDFLAGS = $(CPUFLAGS) -T$(LD_SCRIPT) -nostartfiles -g \
+          -Wl,-Map=$(OUT)/$(PROJECT).map,--cref -Wl,--print-memory-usage -Wl,--warn-common
+
 
 OBJ_FILES = $(addprefix $(OUT)/, $(notdir $(ASM_SRC:.S=.o)))  \
             $(addprefix $(OUT)/, $(notdir $(C_SRC:.c=.o)))    \
@@ -44,7 +49,7 @@ DEPS = $(OBJ_FILES:.o=.d)
 # unconditionally ensure output directory
 $(shell test -d $(OUT) || mkdir $(OUT))
 
-all: $(OUT)/$(PROJECT).bin
+all: $(OUT)/$(PROJECT).bin $(OUT)/$(PROJECT).lss $(OUT)/$(PROJECT).dmp
 
 clean:
 	rm -f $(OUT)/*
@@ -66,6 +71,14 @@ $(OUT)/$(PROJECT).elf: $(OBJ_FILES) Makefile $(LD_SCRIPT)
 
 $(OUT)/$(PROJECT).bin: $(OUT)/$(PROJECT).elf Makefile
 	$(OBJCOPY) -O binary $< $@
+
+
+$(OUT)/$(PROJECT).lss: $(OUT)/$(PROJECT).elf Makefile
+	$(OBJDUMP) -S $< > $@
+
+$(OUT)/$(PROJECT).dmp: $(OUT)/$(PROJECT).elf
+	$(OBJDUMP) -x --syms $< > $@
+
 
 
 -include $(DEPS)
