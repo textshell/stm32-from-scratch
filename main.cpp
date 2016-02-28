@@ -51,7 +51,8 @@ void mainFn() {
     setup_serial(19200);
     serial_writestr("test\r\n");
     run_tests();
-        
+    run_tests_c();
+
     while (1) {
         int ctr;
         ctr = (8000000 / 3) / 2;

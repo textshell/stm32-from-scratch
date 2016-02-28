@@ -1,5 +1,5 @@
 
-C_SRC = 
+C_SRC = test-language-features-c.c
 
 CXX_SRC = main.cpp test-language-features.cpp
 
