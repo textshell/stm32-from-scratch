@@ -28,7 +28,7 @@ COMMONFLAGS = $(CPUFLAGS) -g -ggdb3 -Wa,-amhlsd=$(@:.o=.lst)  -MD -MP -MF $(@:.o
 
 CFLAGS = $(COMMONFLAGS) -O2 \
          -Wall -Werror=strict-prototypes -Wextra -Werror=return-type \
-         -std=gnu99 -fstack-usage -fverbose-asm $(INCLUDEDIRS)
+         -std=gnu99 -fno-common -fstack-usage -fverbose-asm $(INCLUDEDIRS)
 
 CXXFLAGS = $(COMMONFLAGS) -O2 \
          -Wall -Wextra  -Werror=return-type \
