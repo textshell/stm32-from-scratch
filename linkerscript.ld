@@ -30,6 +30,14 @@ SECTIONS {
         *(.text*)
     } > FLASH
 
+    .init_array : {
+        __init_array_start = .;
+        KEEP(*(SORT_BY_INIT_PRIORITY(.init_array.*)))
+        __init_array_end = .;
+    } > FLASH
+
+    /* .fini_array ommited because when would we run destructors? */
+
     .rodata : {
         *(.rodata*)
     } > FLASH

@@ -49,6 +49,17 @@ void init_sram_sections() {
     }
 }
 
+void run_init_data() {
+    typedef void (*init_fun)(void);
+    extern init_fun __init_array_start, __init_array_end;
+
+    init_fun *ptr = &__init_array_start;
+    while (ptr < &__init_array_end) {
+        (*ptr)();
+        ++ptr;
+    }
+}
+
 void mainFn() {
 
     init_sram_sections();
@@ -59,6 +70,9 @@ void mainFn() {
 
     setup_serial(19200);
     serial_writestr("test\r\n");
+
+    run_init_data();
+
     run_tests();
     run_tests_c();
 

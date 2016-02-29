@@ -19,6 +19,16 @@ void global_variable() {
     serial_writebyte_wait(test_init);
 }
 
+__attribute__((constructor (202)))
+static void constructor2() {
+        serial_writebyte_wait('2');
+}
+
+static void constructor1() __attribute__((constructor (200)));
+static void constructor1() {
+        serial_writebyte_wait('0');
+}
+
 void run_tests() {
     global_variable();
 }
