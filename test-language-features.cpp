@@ -19,6 +19,15 @@ void global_variable() {
     serial_writebyte_wait(test_init);
 }
 
+class X {
+public:
+    X() {
+        serial_writebyte_wait('X');
+    }
+};
+
+X x;
+
 __attribute__((constructor (202)))
 static void constructor2() {
         serial_writebyte_wait('2');
