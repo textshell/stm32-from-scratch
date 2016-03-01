@@ -24,6 +24,10 @@ public:
     X() {
         serial_writebyte_wait('X');
     }
+
+    ~X() {
+        serial_writebyte_wait('!');
+    }
 };
 
 X x;

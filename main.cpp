@@ -60,6 +60,13 @@ void run_init_data() {
     }
 }
 
+// No atexit, no destructors
+
+// actual signature is bool __aeabi_atexit(void* object, void (*destroyer)(void*), void* dso_handle)
+extern "C" void __aeabi_atexit() {
+}
+
+
 void mainFn() {
 
     init_sram_sections();

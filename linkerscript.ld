@@ -21,6 +21,8 @@ MEMORY {
 
 __stack_size = 0x400;
 
+__dso_handle = 0;
+
 SECTIONS {
     .vectors : {
         KEEP(*(.vectors))
