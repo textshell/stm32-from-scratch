@@ -42,6 +42,11 @@ static void constructor1() {
         serial_writebyte_wait('0');
 }
 
+void static_user() {
+    static X var;
+}
+
 void run_tests() {
     global_variable();
+    static_user();
 }

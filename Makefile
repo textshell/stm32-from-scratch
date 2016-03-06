@@ -32,7 +32,7 @@ CFLAGS = $(COMMONFLAGS) -O2 \
 
 CXXFLAGS = $(COMMONFLAGS) -O2 \
          -Wall -Wextra  -Werror=return-type \
-         -fno-rtti -fno-exceptions \
+         -fno-rtti -fno-exceptions -fno-threadsafe-statics \
          -std=gnu++14 -fstack-usage -fverbose-asm $(INCLUDEDIRS)
 
 ASFLAGS = $(COMMONFLAGS) $(INCLUDEDIRS)
