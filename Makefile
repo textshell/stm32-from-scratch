@@ -37,7 +37,7 @@ CXXFLAGS = $(COMMONFLAGS) -O2 \
 
 ASFLAGS = $(COMMONFLAGS) $(INCLUDEDIRS)
 
-LDFLAGS = $(CPUFLAGS) -T$(LD_SCRIPT) -nostartfiles -g \
+LDFLAGS = $(CPUFLAGS) -T$(LD_SCRIPT) -nostartfiles -specs=nano.specs -g \
           -Wl,-Map=$(OUT)/$(PROJECT).map,--cref -Wl,--print-memory-usage -Wl,--warn-common
 
 CFLAGS += -ffunction-sections -fdata-sections
