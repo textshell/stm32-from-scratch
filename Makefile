@@ -1,7 +1,7 @@
 
 C_SRC = test-language-features-c.c
 
-CXX_SRC = main.cpp test-language-features.cpp
+CXX_SRC = serial.cpp main.cpp test-language-features.cpp
 
 ASM_SRC =
 
