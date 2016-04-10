@@ -7,6 +7,7 @@ Posts so far:
  * [STM32 from scratch, serial](http://tty.uchuujin.de/2016/02/stm32-from-scratch-serial/)
  * [Makefile for embedded projects](http://tty.uchuujin.de/2016/02/stm32-from-scratch-makefile/)
  * [Enableing C/C++ features](http://tty.uchuujin.de/2016/03/stm32-from-scratch-enableing-c-c++-features/)
+ * [Heap, malloc and new](http://tty.uchuujin.de/2016/04/stm32-from-scratch-heap/)
 
 Toolchain tested with:
 

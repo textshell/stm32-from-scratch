@@ -67,6 +67,11 @@ SECTIONS {
         __bss_end = . ;
     } > RAM
 
+    __heap_start = .;
+    __heap_end = ORIGIN(RAM) + LENGTH(RAM);
+
+    /* Don't place any sections that are actually used on target system after the heap without adjusting _heap_end above */
+
     /* debug information, intentionally only support for modern dwarf */
 
     .debug_info 0 : { *(.debug_info*) }
