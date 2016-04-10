@@ -1,7 +1,7 @@
 
 C_SRC = test-language-features-c.c
 
-CXX_SRC = serial.cpp main.cpp test-language-features.cpp
+CXX_SRC = vectors_stm32f.cpp lowlevel_init.cpp serial.cpp main.cpp test-language-features.cpp
 
 ASM_SRC =
 
