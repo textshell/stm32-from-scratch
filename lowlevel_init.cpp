@@ -6,6 +6,39 @@
 extern "C"
 int main();
 
+void pll_start_hse() {
+
+    // enable high speed external oscillator
+    RCC->CR = (RCC->CR & ~RCC_CR_HSEBYP) | RCC_CR_HSEON;
+    while (!(RCC->CR & RCC_CR_HSERDY)) {
+        ;
+    }
+
+    // init pll
+    int pllmul = 6;
+    RCC->CFGR = (pllmul-2) << 18 | RCC_CFGR_PLLSRC | RCC_CFGR_PPRE1_DIV2;
+    RCC->CR |= RCC_CR_PLLON;
+
+    while (!(RCC->CR & RCC_CR_PLLRDY)) {
+        ;
+    }
+
+    if (RCC->APB2ENR & RCC_APB2ENR_USART1EN) {
+        // if usart1 is clocked wait to drain possible debugging infos.
+        while ((USART1->SR & (USART_SR_TXE | USART_SR_TC)) != (USART_SR_TXE | USART_SR_TC)) {
+            ;
+        }
+    }
+
+    // switch sysclock to pll
+    RCC->CFGR |= RCC_CFGR_SW_PLL;
+
+    // wait for ack
+    while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL) {
+        ;
+    }
+}
+
 void init_sram_sections() {
     extern uint32_t __data_start_flash, __data_start_ram, __data_size;
 
@@ -36,6 +69,8 @@ void run_init_data() {
 }
 
 void Reset_Handler() {
+
+    pll_start_hse();
     init_sram_sections();
     
     setup_serial(19200);

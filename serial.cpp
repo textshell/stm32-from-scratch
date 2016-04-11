@@ -5,7 +5,7 @@
 
 void setup_serial(int baud) {
     RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
-    int divider = 8000000 / (16 * baud);
+    int divider = 48'000'000 / (16 * baud);
 
     USART1->CR1 = USART_CR1_UE | USART_CR1_TE;
     USART1->CR2 = 0;
