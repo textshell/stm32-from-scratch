@@ -2,6 +2,7 @@
 #include <stm32f1xx.h>
 
 #include "serial.h"
+#include "bitband.h"
 
 #include "test-language-features.h"
 
@@ -44,7 +45,7 @@ void Default_Handler() {
 void TIM1_UP_Handler() {
     // Clear interrupts
     TIM1->SR = 0;
-    GPIOC->ODR ^= 1 << 13;
+    bit_band_alias(GPIOC->ODR, 13) ^= 1;
 }
 
 void initTimer() {
