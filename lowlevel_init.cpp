@@ -70,6 +70,9 @@ void run_init_data() {
 
 void Reset_Handler() {
 
+    extern uint32_t vectors;
+
+    SCB->VTOR = (uint32_t)&vectors;
     pll_start_hse();
     init_sram_sections();
     
