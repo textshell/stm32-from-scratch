@@ -41,6 +41,30 @@ void Default_Handler() {
     }
 }
 
+void TIM1_UP_Handler() {
+    // Clear interrupts
+    TIM1->SR = 0;
+    GPIOC->ODR ^= 1 << 13;
+}
+
+void initTimer() {
+    RCC->APB2ENR |= RCC_APB2ENR_TIM1EN;
+
+    RCC->APB2RSTR |= RCC_APB2RSTR_TIM1RST;
+    RCC->APB2RSTR &= ~RCC_APB2RSTR_TIM1RST;
+
+    TIM1->DIER = TIM_DIER_UIE;
+    TIM1->CNT = 1;
+    TIM1->ARR = 732 / 2;
+    TIM1->PSC = 0xffff;
+    TIM1->CR1 = TIM_CR1_CEN;
+
+    // Clear interrupts
+    TIM1->SR = 0;
+
+    NVIC_EnableIRQ(TIM1_UP_IRQn);
+    NVIC_SetPriority(TIM1_UP_IRQn, 15);
+}
 
 int main() {
 
@@ -53,22 +77,35 @@ int main() {
     run_tests();
     run_tests_c();
 
-    while (1) {
-        int ctr;
-        ctr = (48000000 / 3) / 2;
-        // each loop iteration takes 3 cycles to execute.
-        while (ctr) {
-            asm ("");
-            --ctr;
+
+    if (1) {
+        // use timer + interrupts for blinking
+        initTimer();
+        while (1) {
+            ;
         }
-        GPIOC->BRR = 1 << 13;
-        ctr = (48000000 / 3) / 2;
-        // each loop iteration takes 3 cycles to execute.
-        while (ctr) {
-            asm ("");
-            --ctr;
+
+    } else {
+        // use busy loop for blinking
+
+        while (1) {
+            int ctr;
+            ctr = (48000000 / 3) / 2;
+            // each loop iteration takes 3 cycles to execute.
+            while (ctr) {
+                asm ("");
+                --ctr;
+            }
+            GPIOC->BRR = 1 << 13;
+            ctr = (48000000 / 3) / 2;
+            // each loop iteration takes 3 cycles to execute.
+            while (ctr) {
+                asm ("");
+                --ctr;
+            }
+            GPIOC->BSRR = 1 << 13;
         }
-        GPIOC->BSRR = 1 << 13;
     }
+
 }
 
