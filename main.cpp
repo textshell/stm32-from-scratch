@@ -35,6 +35,11 @@ void* __attribute__((weak)) _sbrk (int increment) {
     return old_top;
 }
 
+void Default_Handler() {
+    while (true) {
+        ;
+    }
+}
 
 
 int main() {
