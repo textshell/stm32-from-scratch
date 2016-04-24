@@ -82,8 +82,9 @@ int main() {
     if (1) {
         // use timer + interrupts for blinking
         initTimer();
+
         while (1) {
-            ;
+            __WFI();
         }
 
     } else {
